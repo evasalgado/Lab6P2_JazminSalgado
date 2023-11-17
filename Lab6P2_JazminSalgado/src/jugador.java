@@ -16,15 +16,18 @@ public class jugador {
     private String correo;
     private String pais;
     private Date nacimiento;
+    private int saldo;
+    
 
     public jugador() {
     }
 
-    public jugador(String nombre, String correo, String pais, Date nacimiento) {
+    public jugador(String nombre, String correo, String pais, Date nacimiento,int saldo) {
         this.nombre = nombre;
         this.correo = correo;
         this.pais = pais;
         this.nacimiento = nacimiento;
+        this.saldo=saldo;
     }
 
     public String getNombre() {
@@ -65,6 +68,15 @@ public class jugador {
             JOptionPane.showMessageDialog(null,"Usuario debe ser mayor a 12 años");
         }
     }
+
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
+    
 
     @Override
     public String toString() {
