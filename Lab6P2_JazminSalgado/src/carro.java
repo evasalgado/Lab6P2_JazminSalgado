@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author evaja
  */
 public class carro {
+    private String pais;
     private String marca;
     private String modelo;
     private Color color;
@@ -21,7 +22,8 @@ public class carro {
     public carro() {
     }
 
-    public carro(String marca, String modelo, Color color, int precio) {
+    public carro(String pais,String marca, String modelo, Color color, int precio) {
+        this.pais=pais;
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
