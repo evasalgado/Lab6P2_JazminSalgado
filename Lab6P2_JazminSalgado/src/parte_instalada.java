@@ -43,9 +43,18 @@ public class parte_instalada {
     public String getClasificacion() {
         return clasificacion;
     }
-
+//Spoiler, Rear Bumper, Front Bumper, Side Skirts, Front
+//Fender, Rear Fender y Hood.
     public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
+        try {
+            if (clasificacion.equals("Spoiler")||clasificacion.equals("Rear Bumper")
+                    ||clasificacion.equals("Front Bumper")||clasificacion.equals("Side Skirts")
+                    ||clasificacion.equals("Front Fender")||clasificacion.equals("Rear Fender")
+                    ||clasificacion.equals("Hood")) {
+                
+            }
+        } catch (Exception e) {
+        }
     }
 
     public double getPrecio() {
