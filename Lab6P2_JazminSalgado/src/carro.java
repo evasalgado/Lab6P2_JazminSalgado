@@ -20,17 +20,19 @@ public class carro {
     private int precio;
     private Date año;
     private ArrayList<parte_instalada> partesinstaladas = new ArrayList<>();
+    private String tipo;
 
     public carro() {
     }
 
-    public carro(String pais,String marca, String modelo, Color color, int precio,Date año) {
+    public carro(String pais,String marca, String modelo, Color color, int precio,Date año, String tipo) {
         this.setPais(pais);
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
         this.precio = precio;
         this.año=año;
+        this.tipo=tipo;
     }
 
     public String getPais() {
@@ -103,9 +105,18 @@ public class carro {
         this.partesinstaladas=partesinstaladas;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
     @Override
     public String toString() {
-        return  "\npais=" + pais + "\nmarca=" + marca + "\nmodelo=" + modelo + "\ncolor=" + color + "\nprecio=" + precio + "\npartes instaladas=" + partesinstaladas ;
+        return  "\npais=" + pais + "\nmarca=" + marca + "\nmodelo=" + modelo + "\ncolor=" + color + "\nprecio=" + precio+"\n tipo"+tipo + "\npartes instaladas=" + partesinstaladas ;
     }
 
    
