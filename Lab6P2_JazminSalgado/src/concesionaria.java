@@ -18,6 +18,12 @@ public class concesionaria {
     public concesionaria() {
     }
 
+    public concesionaria(String nombre, String locacion) {
+        this.nombre = nombre;
+        this.locacion = locacion;
+    }
+    
+    
     public String getNombre() {
         return nombre;
     }

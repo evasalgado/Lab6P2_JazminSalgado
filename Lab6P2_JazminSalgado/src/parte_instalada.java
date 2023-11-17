@@ -8,6 +8,7 @@
  * @author evaja
  */
 public class parte_instalada {
+
     private String marca;
     private String clasificacion;
     private double precio;
@@ -16,17 +17,27 @@ public class parte_instalada {
     }
 
     public parte_instalada(String marca, String clasificacion, double precio) {
-        this.marca = marca;
+        this.setMarca(marca);
         this.clasificacion = clasificacion;
         this.precio = precio;
     }
-    
+
     public String getMarca() {
         return marca;
     }
+//,\n" +
+//"Fifteen52, Origin Lab, RocketBunny y Urban Outlaw.
 
     public void setMarca(String marca) {
-        this.marca = marca;
+        try {
+            if (marca.equals("Advance") || marca.equals("DTM Fiberwerkz")
+                    || marca.equals("Fifteen52") || marca.equals("Origin Lab")
+                    || marca.equals("RocketBunny") || marca.equals("Urban Outlaw")) {
+                this.marca = marca;
+            }
+        } catch (Exception e) {
+            System.out.println("Marca no aceptada");
+        }
     }
 
     public String getClasificacion() {
@@ -47,8 +58,7 @@ public class parte_instalada {
 
     @Override
     public String toString() {
-        return  "marca=" + marca + ", clasificacion=" + clasificacion + ", precio=" + precio + '}';
+        return "marca=" + marca + ", clasificacion=" + clasificacion + ", precio=" + precio + '}';
     }
-    
-    
+
 }

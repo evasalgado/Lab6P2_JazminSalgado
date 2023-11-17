@@ -16,17 +16,19 @@ public class jugador {
     private String correo;
     private String pais;
     private Date nacimiento;
+    private String contraseña;
     private int saldo;
     
 
     public jugador() {
     }
 
-    public jugador(String nombre, String correo, String pais, Date nacimiento,int saldo) {
+    public jugador(String nombre, String correo, String pais, Date nacimiento, String contraseña,int saldo) {
         this.nombre = nombre;
         this.correo = correo;
         this.pais = pais;
         this.nacimiento = nacimiento;
+        this.contraseña=contraseña;
         this.saldo=saldo;
     }
 
@@ -73,6 +75,14 @@ public class jugador {
         return saldo;
     }
 
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+    
     public void setSaldo(int saldo) {
         this.saldo = saldo;
     }

@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,19 +18,43 @@ public class carro {
     private String modelo;
     private Color color;
     private int precio;
+    private Date año;
     private ArrayList<parte_instalada> partesinstaladas = new ArrayList<>();
 
     public carro() {
     }
 
-    public carro(String pais,String marca, String modelo, Color color, int precio) {
-        this.pais=pais;
+    public carro(String pais,String marca, String modelo, Color color, int precio,Date año) {
+        this.setPais(pais);
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
         this.precio = precio;
+        this.año=año;
     }
 
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        if (pais=="Japon"||pais=="Italia"||
+                pais=="USA"||pais=="Alemania"
+                ||pais=="Francia"||pais=="UK"||
+                pais=="Sweden") {
+            this.pais = pais;
+        }
+    }
+
+    public ArrayList<parte_instalada> getPartesinstaladas() {
+        return partesinstaladas;
+    }
+
+    public void setPartesinstaladas(ArrayList<parte_instalada> partesinstaladas) {
+        this.partesinstaladas = partesinstaladas;
+    }
+    
+    
     public String getMarca() {
         return marca;
     }
@@ -66,14 +91,24 @@ public class carro {
         return partesinstaladas;
     }
 
+    public Date getAño() {
+        return año;
+    }
+
+    public void setAño(Date año) {
+        this.año = año;
+    }
+    
     public void setMejoras(ArrayList<parte_instalada> partesinstaladas) {
         this.partesinstaladas=partesinstaladas;
     }
 
     @Override
     public String toString() {
-        return  "marca=" + marca + ", modelo=" + modelo + ", color=" + color + ", precio=" + precio + ", mejoras=" + partesinstaladas ;
+        return  "\npais=" + pais + "\nmarca=" + marca + "\nmodelo=" + modelo + "\ncolor=" + color + "\nprecio=" + precio + "\npartes instaladas=" + partesinstaladas ;
     }
+
+   
     
     
 }
