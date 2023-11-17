@@ -90,7 +90,7 @@ public class jugador {
 
     @Override
     public String toString() {
-        return "jugador{" + "nombre=" + nombre ;
+        return  nombre ;
     }
     
     
