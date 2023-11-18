@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author evaja
  */
-public class carro {
+public class carro extends concesionaria{
     private String pais;
     private String marca;
     private String modelo;
@@ -23,6 +23,7 @@ public class carro {
     private String tipo;
 
     public carro() {
+        super();
     }
 
     public carro(String pais,String marca, String modelo, Color color, int precio,Date año, String tipo) {

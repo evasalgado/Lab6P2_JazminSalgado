@@ -6,6 +6,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,15 +22,17 @@ public class main extends javax.swing.JFrame {
      * Creates new form main
      */
     public main() {
+        jugador j = new jugador();
         initComponents();
         jPanel9.setVisible(false);
         pn_menucarro.setVisible(true);
         pn_menuuser.setVisible(false);
-        Salir.setVisible(true);
+        Salir.setVisible(false);
         Date alfofecha = new Date("2000/11/23");
-        jugadores.add(new jugador("AlfonsinElFornais", "alfo1234@gmail.com", "Honduras", alfofecha, "alfi123", WIDTH));
+        j = new jugador("AlfonsinElFornais", "alfo1234@gmail.com", "Honduras", alfofecha, "alfi123", 150000);
+        jugadores.add(j);
         m = (DefaultComboBoxModel) cb_users.getModel();
-        m.addElement(new jugador("AlfonsinElFornais", "alfo1234@gmail.com", "Honduras", alfofecha, "alfi123", WIDTH));
+        m.addElement(j.getNombre());
         cb_users.setModel(m);
         m = new DefaultComboBoxModel<>();
         m = (DefaultComboBoxModel) cb_pais.getModel();
@@ -49,6 +52,12 @@ public class main extends javax.swing.JFrame {
 
         cb_agregarconc.setModel(m);
 
+        m = new DefaultComboBoxModel();
+        m.addElement("Grupo Q");
+        m.addElement("Auto Negocios");
+        m.addElement("Auto Excel");
+
+        cb_concesionariacompra.setModel(m);
     }
 
     /**
@@ -97,7 +106,7 @@ public class main extends javax.swing.JFrame {
         bt_comprarcarro = new javax.swing.JButton();
         cb_concesionariacompra = new javax.swing.JComboBox<>();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_compra = new javax.swing.JTable();
         jLabel21 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -336,17 +345,30 @@ public class main extends javax.swing.JFrame {
         bt_comprarcarro.setText("Comprar");
         jPanel5.add(bt_comprarcarro, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 250, 30));
 
+        cb_concesionariacompra.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_concesionariacompraItemStateChanged(evt);
+            }
+        });
         jPanel5.add(cb_concesionariacompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(241, 6, 272, 34));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_compra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Marca", "Modelo", "Año", "Precio"
             }
-        ));
-        jScrollPane7.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(tb_compra);
 
         jPanel5.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, 350));
 
@@ -537,6 +559,11 @@ public class main extends javax.swing.JFrame {
         jLabel12.setText("Modelos");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 213, 109, -1));
 
+        cb_modelo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_modeloItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cb_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 154, 28));
 
         jLabel13.setText("Color: ");
@@ -726,7 +753,7 @@ public class main extends javax.swing.JFrame {
                             m = new DefaultComboBoxModel();
                             m.addElement("GT-86");
                             m.addElement("Supra");
-                            
+
                         }
                         case 1 -> {
                             m = new DefaultComboBoxModel();
@@ -759,7 +786,6 @@ public class main extends javax.swing.JFrame {
                         }
                     }
                 }
-
 
                 case 1 -> {
                     if (cb_marca.getSelectedIndex() == 0) {
@@ -857,7 +883,8 @@ public class main extends javax.swing.JFrame {
                         m.addElement("S60 Berlina");
                     }
                 }
-                default -> System.out.println("No valido");
+                default ->
+                    System.out.println("No valido");
             }
         }
         cb_modelo.setModel(m);
@@ -866,6 +893,7 @@ public class main extends javax.swing.JFrame {
     private void bt_iniciosesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_iniciosesionMouseClicked
         pn_iniciosesion.setVisible(true);
         pn_registrar.setVisible(false);
+
     }//GEN-LAST:event_bt_iniciosesionMouseClicked
 
     private void bt_menucarro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_menucarro1MouseClicked
@@ -938,7 +966,42 @@ public class main extends javax.swing.JFrame {
                 bt_color.getBackground(), Integer.parseInt(tf_precio.getText()), year, type));
 
         JOptionPane.showMessageDialog(this, "Carro agregado correctamente");
+        Salir.setVisible(true);
+        rb_agencia.setEnabled(true);
+        rb_agencia.setSelected(false);
+        rb_reconstruido.setSelected(false);
+        tf_precio.setText("");
     }//GEN-LAST:event_bt_agregarcarroMouseClicked
+
+    private void cb_modeloItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_modeloItemStateChanged
+        if (evt.getStateChange() == 2) {
+            if (cb_modelo.getSelectedIndex() == 2) {
+                rb_reconstruido.setSelected(true);
+                rb_agencia.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cb_modeloItemStateChanged
+
+    private void cb_concesionariacompraItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_concesionariacompraItemStateChanged
+        Object seleccion = cb_concesionariacompra.getSelectedItem();
+        if (evt.getStateChange() == 2) {
+            if (seleccion instanceof concesionaria) {
+                concesionaria c = (concesionaria) seleccion;
+                Object[] newrow = {c.getCarrosventa().
+                    get(cb_concesionariacompra.getSelectedIndex()).getMarca(),
+                    c.getCarrosventa().
+                    get(cb_concesionariacompra.getSelectedIndex()).getModelo(),
+                    c.getCarrosventa().
+                    get(cb_concesionariacompra.getSelectedIndex()).getAño(),
+                    c.getCarrosventa().
+                    get(cb_concesionariacompra.getSelectedIndex()).getPrecio()
+                };
+                DefaultTableModel modelo = (DefaultTableModel) tb_compra.getModel();
+                modelo.addRow(newrow);
+                tb_compra.setModel(modelo);
+            }
+        }
+    }//GEN-LAST:event_cb_concesionariacompraItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1037,7 +1100,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JMenuItem jm_vender;
     private javax.swing.JList<String> l_eliminar1;
@@ -1051,6 +1113,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel pn_registrar;
     private javax.swing.JRadioButton rb_agencia;
     private javax.swing.JRadioButton rb_reconstruido;
+    private javax.swing.JTable tb_compra;
     private javax.swing.JTextField tf_correo;
     private javax.swing.JTextField tf_nombredeusuario;
     private javax.swing.JTextField tf_paisdeorigen;

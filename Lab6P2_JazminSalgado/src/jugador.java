@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ public class jugador {
     private Date nacimiento;
     private String contraseña;
     private int saldo;
+    private ArrayList<carro> carros = new ArrayList<>();
     
 
     public jugador() {
@@ -86,12 +88,22 @@ public class jugador {
     public void setSaldo(int saldo) {
         this.saldo = saldo;
     }
-    
+
+    public ArrayList<carro> getCarros() {
+        return carros;
+    }
+
+    public void setCarros(ArrayList<carro> carros) {
+        this.carros = carros;
+    }
 
     @Override
     public String toString() {
-        return  nombre ;
+        return "jugador{" + "nombre=" + nombre + ", correo=" + correo + ", pais=" + pais + ", nacimiento=" + nacimiento + ", contrase\u00f1a=" + contraseña + ", saldo=" + saldo + ", carros=" + carros ;
     }
+    
+
+    
     
     
 }
