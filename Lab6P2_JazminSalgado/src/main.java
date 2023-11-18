@@ -127,7 +127,7 @@ public class main extends javax.swing.JFrame {
         l_eliminar1 = new javax.swing.JList<>();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        listarcarri = new javax.swing.JList<>();
         cb_concesionaria1 = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         pn_menucarro = new javax.swing.JPanel();
@@ -392,6 +392,11 @@ public class main extends javax.swing.JFrame {
         jLabel31.setText("Elija el precio");
 
         bt_modificar1.setText("Modificar");
+        bt_modificar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_modificar1MouseClicked(evt);
+            }
+        });
 
         jLabel22.setText("Marca de modificacion:");
 
@@ -451,11 +456,11 @@ public class main extends javax.swing.JFrame {
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(20, 20, 20)
                 .addComponent(bt_modificar1)
                 .addContainerGap(7, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -489,8 +494,8 @@ public class main extends javax.swing.JFrame {
 
         tp_user.addTab("Vender", jPanel7);
 
-        jList2.setModel(new DefaultListModel());
-        jScrollPane6.setViewportView(jList2);
+        listarcarri.setModel(new DefaultListModel());
+        jScrollPane6.setViewportView(listarcarri);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -946,6 +951,8 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_pf_pswdregistroMouseClicked
 
     private void bt_agregarcarroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_agregarcarroMouseClicked
+        DefaultListModel model = (DefaultListModel) l_listarmodificar1.getModel();
+
         String type = "";
         if (rb_agencia.isSelected()) {
             type = "agencia";
@@ -953,7 +960,6 @@ public class main extends javax.swing.JFrame {
             type = "reconstruido";
         }
         Date year = new Date(yc_anio.getYear());
-        concesionaria c = new concesionaria();
         if (cb_agregarconc.getSelectedIndex() == 0) {
             c = new concesionaria(cb_agregarconc.getSelectedItem().toString(), "Tegucigalpa");
         } else if (cb_agregarconc.getSelectedIndex() == 1) {
@@ -964,13 +970,17 @@ public class main extends javax.swing.JFrame {
         c.getCarrosventa().add(new carro(cb_pais.getSelectedItem().toString(),
                 cb_marca.getSelectedItem().toString(), cb_modelo.getSelectedItem().toString(),
                 bt_color.getBackground(), Integer.parseInt(tf_precio.getText()), year, type));
-
+        concesionarias.add(c);
         JOptionPane.showMessageDialog(this, "Carro agregado correctamente");
         Salir.setVisible(true);
         rb_agencia.setEnabled(true);
         rb_agencia.setSelected(false);
         rb_reconstruido.setSelected(false);
         tf_precio.setText("");
+        model.addElement(c);
+        l_listarmodificar1.setModel(model);
+        l_eliminar1.setModel(model);
+        listarcarri.setModel(model);
     }//GEN-LAST:event_bt_agregarcarroMouseClicked
 
     private void cb_modeloItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_modeloItemStateChanged
@@ -983,25 +993,38 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_modeloItemStateChanged
 
     private void cb_concesionariacompraItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_concesionariacompraItemStateChanged
+        DefaultTableModel modelo = (DefaultTableModel) tb_compra.getModel();
         Object seleccion = cb_concesionariacompra.getSelectedItem();
         if (evt.getStateChange() == 2) {
             if (seleccion instanceof concesionaria) {
-                concesionaria c = (concesionaria) seleccion;
-                Object[] newrow = {c.getCarrosventa().
-                    get(cb_concesionariacompra.getSelectedIndex()).getMarca(),
-                    c.getCarrosventa().
-                    get(cb_concesionariacompra.getSelectedIndex()).getModelo(),
-                    c.getCarrosventa().
-                    get(cb_concesionariacompra.getSelectedIndex()).getAño(),
-                    c.getCarrosventa().
-                    get(cb_concesionariacompra.getSelectedIndex()).getPrecio()
-                };
-                DefaultTableModel modelo = (DefaultTableModel) tb_compra.getModel();
-                modelo.addRow(newrow);
-                tb_compra.setModel(modelo);
+                if (cb_concesionariacompra.getSelectedIndex() == 0 || cb_concesionariacompra.getSelectedIndex() == 1
+                        || cb_concesionariacompra.getSelectedIndex() == 2) {
+                    c = (concesionaria) seleccion;
+                    Object[] newrow = {c.getCarrosventa().
+                        get(cb_concesionariacompra.getSelectedIndex()).getMarca(),
+                        c.getCarrosventa().
+                        get(cb_concesionariacompra.getSelectedIndex()).getModelo(),
+                        c.getCarrosventa().
+                        get(cb_concesionariacompra.getSelectedIndex()).getAño(),
+                        c.getCarrosventa().
+                        get(cb_concesionariacompra.getSelectedIndex()).getPrecio()
+                    };
+
+                    modelo.addRow(newrow);
+                    tb_compra.setModel(modelo);
+                }
             }
         }
     }//GEN-LAST:event_cb_concesionariacompraItemStateChanged
+
+    private void bt_modificar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_modificar1MouseClicked
+        if (l_listarmodificar1.getSelectedIndex() >= 0) {
+            DefaultListModel modellista = (DefaultListModel) l_listarmodificar1.getModel();
+            ((carro) modellista.get(l_listarmodificar1.getSelectedIndex())).setColor(bt_color3.getBackground());
+            ((carro) modellista.get(l_listarmodificar1.getSelectedIndex())).setPrecio(Integer.parseInt(tf_precimodificar1.getText()));
+
+        }
+    }//GEN-LAST:event_bt_modificar1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1038,7 +1061,9 @@ public class main extends javax.swing.JFrame {
         });
     }
     ArrayList<jugador> jugadores = new ArrayList<>();
+    ArrayList<concesionaria> concesionarias = new ArrayList<>();
     DefaultComboBoxModel m = new DefaultComboBoxModel();
+    concesionaria c = new concesionaria();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Salir;
     private javax.swing.JButton bt_agregarcarro;
@@ -1088,7 +1113,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel5;
@@ -1104,6 +1128,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_vender;
     private javax.swing.JList<String> l_eliminar1;
     private javax.swing.JList<String> l_listarmodificar1;
+    private javax.swing.JList<String> listarcarri;
     private javax.swing.JPasswordField pf_iniciosesion;
     private javax.swing.JPasswordField pf_pswdregistro;
     private javax.swing.JPopupMenu pm_vender;
