@@ -247,6 +247,11 @@ public class main extends javax.swing.JFrame {
         pn_registrar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 0, 245, -1));
 
         pf_pswdregistro.setText("jPasswordField1");
+        pf_pswdregistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pf_pswdregistroMouseClicked(evt);
+            }
+        });
         pn_registrar.add(pf_pswdregistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 471, -1));
 
         bt_registrarse.setText("Registrarse");
@@ -354,6 +359,13 @@ public class main extends javax.swing.JFrame {
         jScrollPane4.setViewportView(l_listarmodificar1);
 
         jLabel30.setText("Elija el Color");
+
+        bt_color3.setBackground(new java.awt.Color(0, 51, 153));
+        bt_color3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_color3MouseClicked(evt);
+            }
+        });
 
         jLabel31.setText("Elija el precio");
 
@@ -539,7 +551,7 @@ public class main extends javax.swing.JFrame {
         jPanel1.add(bt_color, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 25, -1, 36));
         jPanel1.add(yc_anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 67, 72, -1));
 
-        jLabel14.setText("Fecha de Creación: ");
+        jLabel14.setText("Año:");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 67, 172, 35));
 
         jLabel15.setText("El carro es reconstruido o de agencia:");
@@ -551,7 +563,7 @@ public class main extends javax.swing.JFrame {
                 rb_reconstruidoMouseClicked(evt);
             }
         });
-        jPanel1.add(rb_reconstruido, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 126, -1));
+        jPanel1.add(rb_reconstruido, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 126, -1));
 
         rb_agencia.setText("Agencia");
         rb_agencia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -559,14 +571,19 @@ public class main extends javax.swing.JFrame {
                 rb_agenciaMouseClicked(evt);
             }
         });
-        jPanel1.add(rb_agencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 99, -1));
+        jPanel1.add(rb_agencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 99, -1));
 
         jLabel16.setText("Concesionaria donde Lo consiguió: ");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 243, 19));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 243, 19));
 
         jPanel1.add(cb_agregarconc, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 235, 243, 26));
 
         bt_agregarcarro.setText("Agregar ");
+        bt_agregarcarro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_agregarcarroMouseClicked(evt);
+            }
+        });
         jPanel1.add(bt_agregarcarro, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 426, 250, 27));
 
         jLabel19.setText("Precio:");
@@ -594,7 +611,7 @@ public class main extends javax.swing.JFrame {
     private void bt_iniciarsesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_iniciarsesionMouseClicked
         String pswrd = pf_iniciosesion.getText();
         for (jugador jugadore : jugadores) {
-            if (pswrd.equalsIgnoreCase(jugadore.getContraseña())) {
+            if (pswrd.equalsIgnoreCase(jugadore.getContraseña()) && cb_users.getSelectedItem().toString().equals(jugadore.getNombre())) {
                 pn_menuuser.setVisible(true);
                 jPanel9.setVisible(false);
                 pn_menucarro.setVisible(false);
@@ -687,12 +704,13 @@ public class main extends javax.swing.JFrame {
                 cb_marca.setModel(m);
             } else if (cb_pais.getSelectedIndex() == 5) {
                 m = new DefaultComboBoxModel();
-                m.addElement("MIM");
+                m.addElement("Mini Cooper");
+                m.addElement("CountryMan");
                 cb_marca.setModel(m);
             }
             if (cb_pais.getSelectedIndex() == 6) {
                 m = new DefaultComboBoxModel();
-                m.addElement("Sweden");
+                m.addElement("Volvo");
                 cb_marca.setModel(m);
             }
         }
@@ -701,8 +719,148 @@ public class main extends javax.swing.JFrame {
     private void cb_marcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_marcaItemStateChanged
         DefaultComboBoxModel m = (DefaultComboBoxModel) cb_modelo.getModel();
         if (evt.getStateChange() == 2) {
+            switch (cb_pais.getSelectedIndex()) {
+                case 0 -> {
+                    switch (cb_marca.getSelectedIndex()) {
+                        case 0 -> {
+                            m = new DefaultComboBoxModel();
+                            m.addElement("GT-86");
+                            m.addElement("Supra");
+                            
+                        }
+                        case 1 -> {
+                            m = new DefaultComboBoxModel();
+                            m.addElement("WPZ-X");
+                            m.addElement("Imprez");
+                            m.addElement("BRZ");
+                        }
+                        case 2 -> {
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Civic");
+                            m.addElement("Type-R");
+                            m.addElement("Indgra");
+                            m.addElement("CR-X");
+                        }
+                        case 3 -> {
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Lancer Evo");
+                            m.addElement("Mirage");
+                        }
+                        case 4 -> {
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Skyline-GTR R32");
+                            m.addElement("Skyline-GTR R34");
+                            m.addElement("GTR-R35");
+                            m.addElement("2405X");
+                            m.addElement("350Z");
+                            m.addElement("370Z");
+                        }
+                        default -> {
+                        }
+                    }
+                }
 
+
+                case 1 -> {
+                    if (cb_marca.getSelectedIndex() == 0) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("La Ferrari");
+                        m.addElement("Testorroso");
+                        m.addElement("240");
+                    } else if (cb_marca.getSelectedIndex() == 1) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("Diablo");
+                        m.addElement("Huracan");
+                        m.addElement("Murcielago");
+                    }
+                }
+                case 2 -> {
+                    switch (cb_marca.getSelectedIndex()) {
+                        case 0:
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Mustang");
+                            m.addElement("F-150");
+                            break;
+                        case 1:
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Camara");
+                            m.addElement("Corvette");
+                            m.addElement("Bel-Hir");
+                            break;
+                        case 2:
+                            m = new DefaultComboBoxModel();
+                            m.addElement("NSX");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                case 3 -> {
+                    switch (cb_marca.getSelectedIndex()) {
+                        case 0:
+                            m = new DefaultComboBoxModel();
+                            m.addElement("M3");
+                            m.addElement("X6");
+                            m.addElement("M5");
+                            break;
+                        case 1:
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Berlina 220 b");
+                            m.addElement("Mercedes Clase A");
+                            m.addElement("A AMG 35");
+                            break;
+                        case 2:
+                            m = new DefaultComboBoxModel();
+                            m.addElement("Beetle");
+                            m.addElement("¿Nordo Concept");
+                            break;
+                        default:
+                            break;
+                    }
+                    if (cb_marca.getSelectedIndex() == 3) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("R8");
+                        m.addElement("TT-Coupe");
+                    } else if (cb_marca.getSelectedIndex() == 4) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("911 Careso");
+                        m.addElement("978");
+                    }
+                }
+
+                case 4 -> {
+                    if (cb_marca.getSelectedIndex() == 0) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("206");
+                    }
+                }
+                case 5 -> {
+                    if (cb_marca.getSelectedIndex() == 0) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("MINI COUNTRYMAN Cooper Classic");
+                        m.addElement("MINI COUNTRYMAN Cooper Untamed");
+                        m.addElement("MINI COUNTRYMAN Cooper S Iconic");
+                        m.addElement("MINI COUNTRYMAN Cooper S Untamed ");
+                    } else if (cb_marca.getSelectedIndex() == 1) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("Cooper");
+                        m.addElement("Mini");
+                    }
+                }
+                case 6 -> {
+                    if (cb_marca.getSelectedIndex() == 0) {
+                        m = new DefaultComboBoxModel();
+                        m.addElement("EX30 4x4");
+                        m.addElement("C40 4x4");
+                        m.addElement("EX90 4x4");
+                        m.addElement("S60 Berlina");
+                    }
+                }
+                default -> System.out.println("No valido");
+            }
         }
+        cb_modelo.setModel(m);
     }//GEN-LAST:event_cb_marcaItemStateChanged
 
     private void bt_iniciosesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_iniciosesionMouseClicked
@@ -750,6 +908,37 @@ public class main extends javax.swing.JFrame {
         pn_iniciosesion.setVisible(true);
         cb_users.setModel(m);
     }//GEN-LAST:event_bt_registrarseMouseClicked
+
+    private void bt_color3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_color3MouseClicked
+        bt_color3.setBackground(JColorChooser.showDialog(this, "Elige un color", Color.yellow));
+    }//GEN-LAST:event_bt_color3MouseClicked
+
+    private void pf_pswdregistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pf_pswdregistroMouseClicked
+        pf_pswdregistro.setText("");
+    }//GEN-LAST:event_pf_pswdregistroMouseClicked
+
+    private void bt_agregarcarroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_agregarcarroMouseClicked
+        String type = "";
+        if (rb_agencia.isSelected()) {
+            type = "agencia";
+        } else if (rb_reconstruido.isSelected()) {
+            type = "reconstruido";
+        }
+        Date year = new Date(yc_anio.getYear());
+        concesionaria c = new concesionaria();
+        if (cb_agregarconc.getSelectedIndex() == 0) {
+            c = new concesionaria(cb_agregarconc.getSelectedItem().toString(), "Tegucigalpa");
+        } else if (cb_agregarconc.getSelectedIndex() == 1) {
+            c = new concesionaria(cb_agregarconc.getSelectedItem().toString(), "Tegucigalpa");
+        } else if (cb_agregarconc.getSelectedIndex() == 2) {
+            c = new concesionaria(cb_agregarconc.getSelectedItem().toString(), "Tegucigalpa");
+        }
+        c.getCarrosventa().add(new carro(cb_pais.getSelectedItem().toString(),
+                cb_marca.getSelectedItem().toString(), cb_modelo.getSelectedItem().toString(),
+                bt_color.getBackground(), Integer.parseInt(tf_precio.getText()), year, type));
+
+        JOptionPane.showMessageDialog(this, "Carro agregado correctamente");
+    }//GEN-LAST:event_bt_agregarcarroMouseClicked
 
     /**
      * @param args the command line arguments
